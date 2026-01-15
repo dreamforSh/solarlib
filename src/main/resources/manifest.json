@@ -1,0 +1,18 @@
+{
+  "Group": "XiNian",
+  "Name": "SolarLib",
+  "Version": "0.1.1",
+  "Description": "SolarLib - Fast Development Library Plugin",
+  "Authors": [
+    {
+      "Name": "Terry_MC"
+    }
+  ],
+  "Website": "https://terry-mc.top/",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "Main": "com.xinian.solarlib.SolarLib",
+  "IncludesAssetPack": true
+}
