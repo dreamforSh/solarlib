@@ -14,7 +14,7 @@ import io.netty.channel.Channel;
 
 /**
  * 使用示例
- * 演示如何使用 XiNian Lib 的各项功能
+ * 演示如何使用 solarlib 的各项功能
  */
 public class UsageExample {
 
