@@ -6,11 +6,16 @@ import com.xinian.solarlib.command.CommandBuilder;
 import com.xinian.solarlib.command.CommandRegistry;
 import com.xinian.solarlib.command.CommandSender;
 import com.xinian.solarlib.event.EventRegistry;
+import com.xinian.solarlib.event.HytaleEvents;
 import com.xinian.solarlib.network.NetworkManager;
 import com.xinian.solarlib.packet.Packet;
 import com.xinian.solarlib.packet.PacketBuilder;
 import com.xinian.solarlib.registry.RegisterHelper;
 import io.netty.channel.Channel;
+
+import com.hypixel.hytale.event.EventRegistration;
+import com.hypixel.hytale.event.EventPriority;
+import com.hypixel.hytale.server.core.event.events.player.*;
 
 /**
  * 使用示例
@@ -193,6 +198,49 @@ public class UsageExample {
 
         // 执行命令 (模拟)
         // commandRegistry.execute(someSender, "hello", new String[]{"World"});
+    }
+
+    /**
+     * Hytale 官方事件系统示例
+     */
+    public static void hytaleEventExample() {
+        HytaleEvents hytaleEvents = SolarLib.getInstance().getHytaleEvents();
+
+        // 监听玩家连接事件
+        EventRegistration reg1 = hytaleEvents.onPlayerConnect(event -> {
+            System.out.println("玩家连接: " + event.toString());
+        });
+
+        // 监听玩家准备就绪事件（带优先级）
+        EventRegistration reg2 = hytaleEvents.onPlayerReady(event -> {
+            System.out.println("玩家准备就绪!");
+        });
+
+        // 监听玩家聊天事件（高优先级）
+        EventRegistration reg3 = hytaleEvents.onPlayerChat(event -> {
+            System.out.println("玩家聊天事件触发");
+            // 可以访问事件属性
+            // event.getPlayer() // 获取玩家
+        }, EventPriority.NORMAL);
+
+        // 监听玩家断开连接
+        EventRegistration reg4 = hytaleEvents.onPlayerDisconnect(event -> {
+            System.out.println("玩家断开连接");
+        });
+
+        // 监听服务器关闭事件
+        EventRegistration reg5 = hytaleEvents.onServerShutdown(event -> {
+            System.out.println("服务器正在关闭...");
+            // 清理资源
+        });
+
+        // 使用通用方法监听任意事件
+        EventRegistration reg6 = hytaleEvents.on(PlayerInteractEvent.class, event -> {
+            System.out.println("玩家交互事件");
+        });
+
+        // 注销事件监听（在需要时）
+        // hytaleEvents.unregister(reg1);
     }
 
     /**
