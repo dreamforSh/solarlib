@@ -2,6 +2,7 @@ package com.xinian.solarlib;
 
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.xinian.solarlib.command.CommandRegistry;
 import com.xinian.solarlib.event.EventRegistry;
 import com.xinian.solarlib.network.NetworkManager;
 import com.xinian.solarlib.registry.RegisterHelper;
@@ -23,6 +24,7 @@ public class SolarLib extends JavaPlugin {
     private NetworkManager networkManager;
     private RegisterHelper registerHelper;
     private EventRegistry eventRegistry;
+    private CommandRegistry commandRegistry;
 
     public SolarLib(@Nonnull JavaPluginInit init) {
         super(init);
@@ -37,11 +39,13 @@ public class SolarLib extends JavaPlugin {
         this.networkManager = NetworkManager.getInstance();
         this.registerHelper = RegisterHelper.getInstance();
         this.eventRegistry = EventRegistry.getInstance();
+        this.commandRegistry = CommandRegistry.getInstance();
 
         LOGGER.info("SolarLib initialized successfully!");
         LOGGER.info("- Network Manager: Ready");
         LOGGER.info("- Register Helper: Ready");
         LOGGER.info("- Event Registry: Ready");
+        LOGGER.info("- Command Registry: Ready");
     }
 
     /**
@@ -74,5 +78,13 @@ public class SolarLib extends JavaPlugin {
     @Nonnull
     public EventRegistry getEventManager() {
         return eventRegistry;
+    }
+
+    /**
+     * 获取命令管理器
+     */
+    @Nonnull
+    public CommandRegistry getCommandManager() {
+        return commandRegistry;
     }
 }

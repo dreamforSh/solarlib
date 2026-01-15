@@ -1,6 +1,10 @@
 package com.xinian.solarlib.example;
 
 import com.xinian.solarlib.SolarLib;
+import com.xinian.solarlib.command.Command;
+import com.xinian.solarlib.command.CommandBuilder;
+import com.xinian.solarlib.command.CommandRegistry;
+import com.xinian.solarlib.command.CommandSender;
 import com.xinian.solarlib.event.EventRegistry;
 import com.xinian.solarlib.network.NetworkManager;
 import com.xinian.solarlib.packet.Packet;
@@ -123,6 +127,72 @@ public class UsageExample {
         // 使用注解方式注册
         PlayerListener listener = new PlayerListener();
         eventRegistry.registerObject(listener);
+    }
+
+    /**
+     * 命令系统示例
+     */
+    public static void commandExample() {
+        CommandRegistry commandRegistry = SolarLib.getInstance().getCommandManager();
+
+        // 使用 CommandBuilder 快速注册命令
+        CommandBuilder.create("hello")
+                .description("打招呼命令")
+                .usage("/hello [player]")
+                .alias("hi", "greet")
+                .minArgs(0)
+                .maxArgs(1)
+                .executes((sender, args) -> {
+                    if (args.length == 0) {
+                        sender.sendMessage("你好，" + sender.getName() + "!");
+                    } else {
+                        sender.sendMessage("你好，" + args[0] + "!");
+                    }
+                    return true;
+                })
+                .buildAndRegister();
+
+        // 注册带权限的命令
+        CommandBuilder.create("admin")
+                .description("管理员命令")
+                .permission("solarlib.admin")
+                .executes((sender, args) -> {
+                    sender.sendMessage("你有管理员权限!");
+                    return true;
+                })
+                .buildAndRegister();
+
+        // 注册带 Tab 补全的命令
+        CommandBuilder.create("gamemode")
+                .description("切换游戏模式")
+                .usage("/gamemode <mode>")
+                .alias("gm")
+                .args(1, 1)
+                .executes((sender, args) -> {
+                    sender.sendMessage("切换游戏模式为: " + args[0]);
+                    return true;
+                })
+                .tabCompletes((sender, args) -> {
+                    if (args.length == 1) {
+                        return java.util.Arrays.asList("survival", "creative", "adventure", "spectator");
+                    }
+                    return new java.util.ArrayList<>();
+                })
+                .buildAndRegister();
+
+        // 手动创建并注册命令
+        Command customCommand = new Command("info", "查看信息", "/info") {
+            @Override
+            public boolean execute(CommandSender sender, String[] args) {
+                sender.sendMessage("SolarLib v0.1.1");
+                sender.sendMessage("已注册命令数: " + commandRegistry.getCommandCount());
+                return true;
+            }
+        };
+        commandRegistry.register(customCommand);
+
+        // 执行命令 (模拟)
+        // commandRegistry.execute(someSender, "hello", new String[]{"World"});
     }
 
     /**
