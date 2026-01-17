@@ -44,7 +44,7 @@ package com.xinian.solarlib.api;
  *         super("mycommand", "My command description");
  *     }
  *     
- *     @Override
+ *     &#064;Override
  *     public CompletableFuture<Void> execute(ICommandContext context) {
  *         context.sendMessage("Hello!");
  *         return CompletableFuture.completedFuture(null);
