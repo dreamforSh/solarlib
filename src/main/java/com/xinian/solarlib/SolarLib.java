@@ -91,14 +91,14 @@ public class SolarLib extends JavaPlugin {
             ex.printStackTrace();
             return null;
         });
+        
+        // 注册指令 (移出异步加载，确保指令在 setup 阶段注册)
+        registerCommands();
     }
     
     @Override
     protected void start() {
         super.start();
-        
-        // 在 start 阶段注册指令（此时插件已完全初始化）
-        registerCommands();
         
         LOGGER.info("SolarLib started successfully!");
         LOGGER.info("- Network Manager: Ready");
