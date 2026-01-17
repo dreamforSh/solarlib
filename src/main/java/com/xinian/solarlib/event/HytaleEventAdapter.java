@@ -4,6 +4,11 @@ import com.hypixel.hytale.event.EventPriority;
 import com.hypixel.hytale.event.EventRegistration;
 import com.hypixel.hytale.event.IBaseEvent;
 import com.hypixel.hytale.event.IEventRegistry;
+import com.hypixel.hytale.component.ComponentAccessor;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.modules.entity.damage.DeathComponent;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.xinian.solarlib.SolarLib;
 
 import javax.annotation.Nonnull;
@@ -74,5 +79,37 @@ public class HytaleEventAdapter {
     @Nonnull
     public IEventRegistry getHytaleEventRegistry() {
         return hytaleEventRegistry;
+    }
+    
+    /**
+     * 死亡组件事件处理器接口
+     */
+    @FunctionalInterface
+    public interface DeathComponentHandler {
+        void handle(
+            @Nonnull Ref<EntityStore> ref,
+            @Nonnull DeathComponent component,
+            @Nonnull Store<EntityStore> store,
+            @Nonnull ComponentAccessor<EntityStore> accessor
+        );
+    }
+    
+    /**
+     * 注册死亡组件添加监听器（玩家死亡时触发）
+     * 注意：这是一个简化的接口，实际的ECS系统事件需要通过系统注册
+     */
+    public void registerDeathComponentAddedListener(@Nonnull DeathComponentHandler handler) {
+        // 这里应该通过ECS系统注册，但由于我们使用的是反编译的API
+        // 实际实现需要访问World的ECS系统管理器
+        SolarLib.LOGGER.warning("DeathComponent listeners should be registered through ECS systems");
+        SolarLib.LOGGER.warning("This is a placeholder - implement through proper ECS system registration");
+    }
+    
+    /**
+     * 注册死亡组件移除监听器（玩家重生时触发）
+     */
+    public void registerDeathComponentRemovedListener(@Nonnull DeathComponentHandler handler) {
+        SolarLib.LOGGER.warning("DeathComponent listeners should be registered through ECS systems");
+        SolarLib.LOGGER.warning("This is a placeholder - implement through proper ECS system registration");
     }
 }

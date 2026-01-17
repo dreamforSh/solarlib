@@ -2,10 +2,10 @@
   "Group": "XiNian",
   "Name": "SolarLib",
   "Version": "0.1.1",
-  "Description": "SolarLib - Fast Development Library Plugin",
+  "Description": "SolarLib - Quick implementation library for Hytale commands and registrations",
   "Authors": [
     {
-      "Name": "Terry_MC"
+      "Name": "Terry_MC,xinian(maintainer)"
     }
   ],
   "Website": "https://terry-mc.top/",
